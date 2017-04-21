@@ -9,12 +9,6 @@ namespace LINQ101MVC.Models
     [Table("Sales.CreditCard")]
     public partial class CreditCard
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CreditCard()
-        {
-            SalesOrderHeaders = new HashSet<SalesOrderHeader>();
-        }
-
         public int CreditCardID { get; set; }
 
         [Required]
@@ -31,7 +25,7 @@ namespace LINQ101MVC.Models
 
         public DateTime ModifiedDate { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SalesOrderHeader> SalesOrderHeaders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage","CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SalesOrderHeader> SalesOrderHeaders { get; set; } = new HashSet<SalesOrderHeader>();
     }
 }

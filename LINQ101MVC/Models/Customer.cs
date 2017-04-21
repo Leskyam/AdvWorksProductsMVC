@@ -9,12 +9,6 @@ namespace LINQ101MVC.Models
     [Table("Sales.Customer")]
     public partial class Customer
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Customer()
-        {
-            SalesOrderHeaders = new HashSet<SalesOrderHeader>();
-        }
-
         public int CustomerID { get; set; }
 
         public int? PersonID { get; set; }
@@ -34,7 +28,7 @@ namespace LINQ101MVC.Models
 
         public virtual Person Person { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SalesOrderHeader> SalesOrderHeaders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage","CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SalesOrderHeader> SalesOrderHeaders { get; set; } = new HashSet<SalesOrderHeader>();
     }
 }
