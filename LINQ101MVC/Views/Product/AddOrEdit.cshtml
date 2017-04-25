@@ -1,0 +1,95 @@
+﻿@using System.Configuration
+@model LINQ101MVC.ViewModels.ProductViewModel
+
+@{ ViewBag.Title = "Add or Edit - Product"; }
+
+@if (Model != null)
+{
+    ViewBag.Title = string.Concat(Model.Product.ProductID != 0 ? "Edit" : "Add", " Product");
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+@if (Model != null)
+{
+    using (Html.BeginForm("Save", "Product"))
+    {
+        <div class="form-group">
+            <label for="Product_ProductSubcategoryID">Sub Cat V-II</label>
+            <select id="Product_ProductSubcategoryID" name="Product.ProductSubcategoryID" class="form-control">
+                @foreach (var c in Model.ProductCategories.ToList())
+                {
+                    <optgroup label="@c.Name">
+                        @foreach (var s in Model.ProductSubcategories.Where(s => s.ProductCategoryID == c.ProductCategoryID))
+                        {
+                            var selected = s.ProductSubcategoryID == Model.Product.ProductSubcategoryID ? "selected" : "";
+                            <option @selected value="@s.ProductSubcategoryID">@s.Name</option>
+                        }
+                    </optgroup>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(p => p.Product.Name)
+            @Html.TextBoxFor(p => p.Product.Name, new {@class="form-control"})
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(p => p.Product.ProductNumber)
+            @Html.TextBoxFor(p=> p.Product.ProductNumber, new {@class = "form-control"})
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(p => p.Product.SafetyStockLevel)
+            @Html.TextBoxFor(p=> p.Product.SafetyStockLevel, new {@class = "form-control"})
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(p => p.Product.ReorderPoint)
+            @Html.TextBoxFor(p => p.Product.SellStartDate, new {@class="form-control"})
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(p => p.Product.SellEndDate)
+            @Html.TextBoxFor(p => p.Product.SellEndDate, new {@class = "form-control"})
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(p => p.Product.ModifiedDate)
+            @Html.TextBoxFor(p => p.Product.ModifiedDate, new {@class= "form-control", disabled = true})
+        </div>
+        <div class="form-group">
+            <label>
+                @Html.CheckBoxFor(p => p.Product.MakeFlag) Make Flag
+            </label>
+        </div>
+        <div class="form-group">
+            <label>
+                @Html.CheckBoxFor(p => p.Product.FinishedGoodsFlag) Finished Good Flag
+            </label>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(p => p.Product.StandardCost)
+            @Html.TextBoxFor(p => p.Product.StandardCost, new {@class = "form-control"})
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(p => p.Product.ListPrice)
+            @Html.TextBoxFor(p => p.Product.ListPrice, new {@class = "form-control"})
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(p => p.Product.DaysToManufacture)
+            @Html.TextBoxFor(p => p.Product.DaysToManufacture, new {@class = "form-control"})
+        </div>
+
+    }
+}
+else
+{
+    <p class="bg-warning">@ConfigurationManager.AppSettings["NoInfoMsg"]</p>
+}
+
+@section scripts
+{
+    <script>
+        function updateSubcategoryList() {
+            console.log("Update subcategory list to show only the corresponding to the Category " +
+                $("#cboCategory").val());
+        }
+    </script>
+}

@@ -1,0 +1,89 @@
+﻿@using System.Configuration
+@model IEnumerable<LINQ101MVC.Models.ProductCategory>
+
+<h2>Product - Categories</h2>
+<hr/>
+@if (Model != null)
+{
+    using (Html.BeginForm("Delete", "ProductCategory", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("id", "");
+
+        <div class="form-group">
+            @Html.ActionLink(" New ", "AddOrEdit", "ProductCategory", new { @class = "btn btn-primary", accesskey = "N" })
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Modified Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.Name</td>
+                    <td>@c.ModifiedDate</td>
+                    <td>
+                        @Html.ActionLink(" Edit ", string.Concat("AddOrEdit", "/", c.ProductCategoryID), "ProductCategory") |
+                        @if (c.ProductSubcategories.Count > 0)
+                        {
+                            <span title="Delete is not available. This Category already has Sub Categories on its behalf."> Delete </span>
+                        }
+                        else
+                        {
+                            @Html.ActionLink(" Delete ", "Delete", null, new { @class = "js-delete", data_id = c.ProductCategoryID })
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <p class="bg-warning">@ConfigurationManager.AppSettings["NoInfoMsg"]</p>
+}
+
+<div class="form-group">
+    @Html.ActionLink(" New ", "AddOrEdit", "ProductCategory", new { @class = "btn btn-primary" })
+</div>
+
+@section scripts
+{
+
+<script>
+    $(document).ready(function () {
+        $("table").on("click", "a.js-delete", function (event) {
+
+            event.preventDefault();
+            var sender = $(this);
+            if (confirm("Are you sure to delete this Category?")) {
+
+                $("#id").val(sender.data("id"));
+                $.ajax({
+                    url: sender.attr("href"),
+                    method: "post",
+                    data: $("form").serialize(),
+                    success: function () {
+                        sender.parents("tr").fadeOut(500, function() {
+                            sender.parents("tr").remove();
+                        });
+                    },
+                    error: function(data) {
+                        console.log(data.responseText);
+                    }
+                });
+            }
+
+        });
+
+    });
+</script>
+
+}

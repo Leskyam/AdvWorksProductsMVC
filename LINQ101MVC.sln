@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQ101MVC", "LINQ101MVC\LINQ101MVC.csproj", "{0C3681A3-DA02-4A82-B325-0501E3099350}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLINQ101MVC", "TestLINQ101MVC\TestLINQ101MVC.csproj", "{AF45BA8E-26DC-4E4A-893A-138932BE6677}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0C3681A3-DA02-4A82-B325-0501E3099350}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C3681A3-DA02-4A82-B325-0501E3099350}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C3681A3-DA02-4A82-B325-0501E3099350}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF45BA8E-26DC-4E4A-893A-138932BE6677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF45BA8E-26DC-4E4A-893A-138932BE6677}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF45BA8E-26DC-4E4A-893A-138932BE6677}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF45BA8E-26DC-4E4A-893A-138932BE6677}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,89 @@
+﻿@using System.Configuration
+@model IEnumerable<LINQ101MVC.Models.ProductSubcategory>
+
+<h2>Product - SubCategories</h2>
+<hr/>
+@if (Model != null)
+{
+    using (Html.BeginForm("Delete", "ProductSubCategory", FormMethod.Post))
+    {
+
+        @Html.AntiForgeryToken()
+        @Html.Hidden("id")
+
+        <div class="form-group">
+            @Html.ActionLink(" New ", "AddOrEdit", "ProductSubCategoryViewModel", new {@class = "btn btn-primary", accesskey = "N"})
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>Cagegory</td>
+                <td>Name</td>
+                <td>Modified Date</td>
+                <td>Actions</td>
+            </tr>
+            </thead>
+            @foreach (var s in Model)
+            {
+                <tr>
+                    <td>@s.ProductCategory.Name</td>
+                    <td>@s.Name</td>
+                    <td>@s.ModifiedDate</td>
+                    <td>
+                        @Html.ActionLink(" Edit ", string.Concat("AddOrEdit", "/", s.ProductSubcategoryID), "ProductSubCategory") |
+                        
+                        @if (s.Products.Count > 0)
+                        {
+                            <span title="Delete is not available. This Sub Category already has Products on its behalf."> Delete </span>
+                        }
+                        else
+                        {
+                            @Html.ActionLink(" Delete ", "Delete", "ProductSubCategory", null, new {@class = "js-delete", data_id = s.ProductSubcategoryID})
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+}
+else
+{
+    <p class="bg-warning">@ConfigurationManager.AppSettings["NoInfoMsg"]</p>
+}
+<div class="form-group">
+    @Html.ActionLink(" New ", "AddOrEdit", "ProductSubCategoryViewModel", new { @class = "btn btn-primary" })
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $("table a.js-delete").on("click", function (event) {
+                event.preventDefault();
+                if (confirm("The selected Sub Category will be deleted, are you sure?")) {
+
+                    var $sender = $(this);
+                    $("#id").val($sender.data("id"));
+                    $.ajax({
+                            url: $sender.attr("href"),
+                            method: "post",
+                            data: $("form").serialize()
+                        })
+                        .success(function() {
+                            $sender.parents("tr").fadeOut(500, function () {
+                                $sender.parents("tr").remove();
+                            });
+                        })
+                        .error(function(data) {
+                            console.log(data.responseText);
+                        });
+
+                }
+
+            });
+
+            $("table").DataTable();
+
+        });
+    </script>
+}

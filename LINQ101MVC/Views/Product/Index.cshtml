@@ -1,0 +1,56 @@
+﻿@using System.Configuration
+@model LINQ101MVC.ViewModels.ProductMasterDetailViewModel
+
+<h2>Products</h2>
+<hr/>
+
+@if (Model != null)
+{
+    using (@Html.BeginForm("Index", "Product", FormMethod.Get, new {@class="form-inline"}))
+    {
+        <div clas="form-group">
+            <label>Category: @Html.DropDownList("categoryId", Model.ProductCategories, "All Categories", new { @class = "form-control", onchange = "this.form.submit();" })</label>
+            <label>Subcategory: @Html.DropDownList("subCategoryId", Model.ProductSubCategories, "All Sub Categories", new { @class = "form-control", onchange = "this.form.submit();" })</label>
+        </div>
+    }
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Safety Stock L.</th>
+                <th>Reorder P.</th>
+                <th>Sell Start Date</th>
+                <th>Modif. Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        @foreach (var p in Model.Products)
+        {
+            <tr>
+                <td>@p.Name</td>
+                <td>@p.ProductNumber</td>
+                <td>@p.SafetyStockLevel</td>
+                <td>@p.ReorderPoint</td>
+                <td>@p.SellStartDate.ToShortDateString()</td>
+                <td>@(p.SellEndDate.HasValue ? p.SellEndDate?.ToShortDateString() : "")</td>
+                <td nowrap="nowrap">
+                    @Html.ActionLink(" Edit ", string.Concat("AddOrEdit", "/", p.ProductID), "Product") |
+                    @Html.ActionLink(" Delete ", "Delete", "Product")
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p class="bg-warning">@ConfigurationManager.AppSettings["NoInfoMsg"]</p>
+}
+
+@section scripts{
+    <script>
+        $("table").DataTable();
+    </script>
+
+}

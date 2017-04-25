@@ -6,22 +6,31 @@ namespace LINQ101MVC.Models
     {
         public static ApplicationDbContext Create() => new ApplicationDbContext();
 
-        public ApplicationDbContext()
-            : base("name=DefaultConnection")
-        {
-        }
+        public ApplicationDbContext() : base("name=DefaultConnection") { }
 
         public virtual DbSet<Department> Departments { get; set; }
+
         public virtual DbSet<Employee> Employees { get; set; }
+
         public virtual DbSet<Person> People { get; set; }
+
         public virtual DbSet<CreditCard> CreditCards { get; set; }
+
         public virtual DbSet<Customer> Customers { get; set; }
+
         public virtual DbSet<SalesOrderDetail> SalesOrderDetails { get; set; }
+
         public virtual DbSet<SalesOrderHeader> SalesOrderHeaders { get; set; }
+
         public virtual DbSet<SalesPerson> SalesPersons { get; set; }
+
         // Last moment added entities.
-        public virtual DbSet<Product> Products { get; set; }
+
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
+
+        public virtual DbSet<ProductSubcategory> ProductSubcategories { get; set; }
+
+        public virtual DbSet<Product> Products { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
