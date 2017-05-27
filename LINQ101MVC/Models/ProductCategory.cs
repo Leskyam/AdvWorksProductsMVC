@@ -11,8 +11,8 @@ namespace LINQ101MVC.Models
     {
         public int ProductCategoryID { get; set; }
 
-        [Required]
         [StringLength(50)]
+        [Required]
         public string Name { get; set; }
 
         public Guid rowguid { get; set; } = Guid.NewGuid();

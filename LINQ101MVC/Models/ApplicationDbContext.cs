@@ -125,10 +125,15 @@ namespace LINQ101MVC.Models
                 .HasMany(e => e.SalesOrderHeaders)
                 .WithOptional(e => e.SalesPerson)
                 .HasForeignKey(e => e.SalesPersonID);
+
             modelBuilder.Entity<Product>()
                 .Property(e => e.StandardCost)
                 .HasPrecision(19, 4);
+
             // Last added section.
+            // Not to map a model property to a datacolumn in the database.
+            modelBuilder.Entity<Product>().Ignore(e => e.IsDeletable);
+            
             modelBuilder.Entity<Product>()
                 .Property(e => e.ListPrice)
                 .HasPrecision(19, 4);

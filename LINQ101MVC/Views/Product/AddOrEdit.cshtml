@@ -54,12 +54,12 @@
             @Html.LabelFor(p => p.Product.ModifiedDate)
             @Html.TextBoxFor(p => p.Product.ModifiedDate, new {@class= "form-control", disabled = true})
         </div>
-        <div class="form-group">
+        <div class="checkbox">
             <label>
                 @Html.CheckBoxFor(p => p.Product.MakeFlag) Make Flag
             </label>
         </div>
-        <div class="form-group">
+        <div class="checkbox">
             <label>
                 @Html.CheckBoxFor(p => p.Product.FinishedGoodsFlag) Finished Good Flag
             </label>
@@ -82,14 +82,4 @@
 else
 {
     <p class="bg-warning">@ConfigurationManager.AppSettings["NoInfoMsg"]</p>
-}
-
-@section scripts
-{
-    <script>
-        function updateSubcategoryList() {
-            console.log("Update subcategory list to show only the corresponding to the Category " +
-                $("#cboCategory").val());
-        }
-    </script>
 }

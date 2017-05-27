@@ -27,14 +27,14 @@ namespace LINQ101MVC.ViewModels
 
             if (subCategoryId.HasValue)
             {
-                Products = _db.Products.Where(p => p.ProductSubcategoryID == subCategoryId);
+                Products = _db.Products.Where(p => p.ProductSubcategoryID == subCategoryId).Include(p => p.SalesOrderDetails);
             } else {
-                if (subCategories.Any())
+                if (subCategories.Any() && categoryId.HasValue)
                 {
-                    Products = from p in _db.Products
+                    Products = (from p in _db.Products
                                from s in subCategories
                                where p.ProductSubcategoryID == s.ProductSubcategoryID
-                               select p;
+                               select p); // Too heavy .Include(p => p.SalesOrderDetails);
                 }
                 else {
                     Products = _db.Products;
@@ -51,4 +51,5 @@ namespace LINQ101MVC.ViewModels
             _db?.Dispose();
         }
     }
+
 }

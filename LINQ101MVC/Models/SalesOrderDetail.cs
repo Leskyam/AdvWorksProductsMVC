@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace LINQ101MVC.Models
 {
     [Table("Sales.SalesOrderDetail")]
-    public partial class SalesOrderDetail
+    public partial class SalesOrderDetail : IProductDependableEntity
     {
         [Key]
         [Column(Order = 0)]

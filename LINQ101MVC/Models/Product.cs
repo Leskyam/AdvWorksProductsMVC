@@ -1,3 +1,7 @@
+using System.Data.Entity;
+using System.Linq;
+using Microsoft.Ajax.Utilities;
+
 namespace LINQ101MVC.Models
 {
     using System;
@@ -88,6 +92,8 @@ namespace LINQ101MVC.Models
 
         public ProductSubcategory ProductSubcategory { get; set; }
 
+        public ICollection<SalesOrderDetail> SalesOrderDetails { get; set; } = new HashSet<SalesOrderDetail>();
+
         // Todo: Add IsDeletable property here with private setter
         /*
          * The property will take a private stored list of 
@@ -95,6 +101,32 @@ namespace LINQ101MVC.Models
          * for he ProductID has occurrences in it, is so
          * the values of this property will be "false"
          */
+        public bool IsDeletable => GetDeletableStatus();
 
+        
+        private readonly ICollection<ICollection<IProductDependableEntity>> _dependableEntities = 
+            new HashSet<ICollection<IProductDependableEntity>>();
+
+        private bool GetDeletableStatus()
+        {
+            // Add the navigation properties that represent entities dependable of this entity (Product).
+            _dependableEntities.Add((new List<IProductDependableEntity>(SalesOrderDetails)));
+
+            /* From here:
+            foreach (var dependableEntity in _dependableEntities)
+            {
+                if (dependableEntity.Any(p => p.ProductID == this.ProductID)) return false;
+            }
+            To this code below: */
+            // Todo: look for difference between the extension methods: All and Any
+            return _dependableEntities.All(dependableEntity => dependableEntity.All(p => p.ProductID != this.ProductID));
+        }
+
+
+    }
+
+    public interface IProductDependableEntity
+    {
+        int ProductID { get; set; }
     }
 }

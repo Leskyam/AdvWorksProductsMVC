@@ -9,8 +9,9 @@ namespace LINQ101MVC.ViewModels
 {
     public class ModelMapper
     {
+
         // Todo: Evaluate to implement an object mapper, eg: AutoMapper
-        public static void Map<T>(T source, T target)
+        public static void Map<T>(T source, T target) where T : class
         {
             if (source == null) return;
             foreach (var propInfo in typeof(T).GetProperties())

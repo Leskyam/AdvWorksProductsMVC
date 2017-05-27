@@ -36,6 +36,7 @@ namespace TestLINQ101MVC
             Assert.IsNotNull(targetNotNullObject);
         }
 
+        // Todo: Redesign this test.
         [TestMethod]
         public void ModelMapper_Map_Method_ShuldReturn_NotNullMappedObject()
         {

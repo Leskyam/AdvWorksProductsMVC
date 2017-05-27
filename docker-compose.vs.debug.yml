@@ -1,0 +1,13 @@
+version: '2.1'
+
+services:
+  linq101mvc:
+    image: linq101mvc:dev
+    build:
+      args:
+        source: ${DOCKER_BUILD_SOURCE}
+    volumes:
+      - .\LINQ101MVC:C:\inetpub\wwwroot
+      - ~\msvsmon:C:\msvsmon:ro
+    labels:
+      - "com.microsoft.visualstudio.targetoperatingsystem=windows"

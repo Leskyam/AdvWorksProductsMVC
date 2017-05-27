@@ -9,12 +9,12 @@
     using (@Html.BeginForm("Index", "Product", FormMethod.Get, new {@class="form-inline"}))
     {
         <div clas="form-group">
-            <label>Category: @Html.DropDownList("categoryId", Model.ProductCategories, "All Categories", new { @class = "form-control", onchange = "this.form.submit();" })</label>
+            <label>Category: @Html.DropDownList("categoryId", Model.ProductCategories, "All Categories", new { @class = "form-control", onchange = "$('#subCategoryId').val(0);this.form.submit();" })</label>
             <label>Subcategory: @Html.DropDownList("subCategoryId", Model.ProductSubCategories, "All Sub Categories", new { @class = "form-control", onchange = "this.form.submit();" })</label>
         </div>
     }
 
-    <table class="table table-striped">
+    <table class="table table-striped uk-table-condensed">
         <thead>
             <tr>
                 <th>Name</th>
@@ -37,7 +37,11 @@
                 <td>@(p.SellEndDate.HasValue ? p.SellEndDate?.ToShortDateString() : "")</td>
                 <td nowrap="nowrap">
                     @Html.ActionLink(" Edit ", string.Concat("AddOrEdit", "/", p.ProductID), "Product") |
-                    @Html.ActionLink(" Delete ", "Delete", "Product")
+                    @if (!p.IsDeletable) {
+                        <span title="Delete is not available. This Category already has Sub Categories on its behalf."> Delete </span>
+                    } else {
+                        @Html.ActionLink(" Delete ", "Delete", "Product")
+                    }
                 </td>
             </tr>
         }

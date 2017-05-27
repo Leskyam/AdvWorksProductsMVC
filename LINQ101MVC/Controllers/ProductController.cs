@@ -11,6 +11,7 @@ namespace LINQ101MVC.Controllers
 {
     public class ProductController : Controller
     {
+
         private readonly ApplicationDbContext _db = ApplicationDbContext.Create();
 
         // GET: Product
@@ -48,7 +49,7 @@ namespace LINQ101MVC.Controllers
         [HttpGet]
         public ActionResult Delete()
         {
-            return Content("Delete operation requires to check if the product is not in use by other entities, that's why it's not implemented yet.");
+            return Content("Not implemented yet.");
         }
 
         protected override void Dispose(bool disposing)

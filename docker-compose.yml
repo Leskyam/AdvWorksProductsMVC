@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  linq101mvc:
+    image: linq101mvc
+    build:
+      context: .\LINQ101MVC
+      dockerfile: Dockerfile

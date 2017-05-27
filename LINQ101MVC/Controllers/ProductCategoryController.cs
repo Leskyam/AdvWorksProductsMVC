@@ -54,7 +54,7 @@ namespace LINQ101MVC.Controllers
                 _db.ProductCategories.Add(category);
             }
 
-            await _db.SaveChangesAsync();
+            //await _db.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
